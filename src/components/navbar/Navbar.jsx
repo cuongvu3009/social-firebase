@@ -10,7 +10,7 @@ const Navbar = () => {
         <li className='logo'>
           <Link to='/' className='styledLink logo'>
             <FaDiscord size={35} />
-            <span>The Dojo</span>
+            <span>The Social</span>
           </Link>
         </li>
 

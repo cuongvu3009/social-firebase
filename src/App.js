@@ -1,12 +1,12 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Navbar from './components/Navbar';
-import Dashboard from './pages/Dashboard';
-import Create from './pages/Create';
-import Project from './pages/Project';
-import Sidebar from './components/Sidebar';
+import Login from './pages/login/Login';
+import Signup from './pages/signup/Signup';
+import Navbar from './components/navbar/Navbar';
+import Dashboard from './pages/dashboard/Dashboard';
+import Create from './pages/create/Create';
+import Project from './pages/project/Project';
+import Sidebar from './components/sidebar/Sidebar';
 
 function App() {
   return (
