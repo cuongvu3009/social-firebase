@@ -1,41 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import Logo from './Logo';
+import { FaDiscord } from 'react-icons/fa';
+import './navbar.css';
 
 const Navbar = () => {
   return (
-    <Wrapper>
-      <Link to='/' className='styledLink'>
-        <Logo />
-      </Link>
-      <Right>
-        <Link to='/login' className='styledLink'>
-          <Text>Login</Text>
-        </Link>
-        <Link to='/signup' className='styledLink'>
-          <Text>Signup</Text>
-        </Link>
-      </Right>
-    </Wrapper>
+    <nav className='navbar'>
+      <ul>
+        <li className='logo'>
+          <Link to='/' className='styledLink logo'>
+            <FaDiscord size={35} />
+            <span>The Dojo</span>
+          </Link>
+        </li>
+
+        <li>
+          <Link to='/login' className='styledLink'>
+            Login
+          </Link>
+        </li>
+        <li>
+          <Link to='/signup' className='styledLink'>
+            Signup
+          </Link>
+        </li>
+        <li>
+          <button className='btn'>Logout</button>
+        </li>
+      </ul>
+    </nav>
   );
 };
 
 export default Navbar;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-`;
-
-const Right = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-`;
-
-const Text = styled.p`
-  font-size: large;
-  font-weight: 400;
-  cursor: pointer;
-`;
