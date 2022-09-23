@@ -2,9 +2,13 @@ import { Link } from 'react-router-dom';
 
 // styles & images
 import './sidebar.css';
+
+//	images and icons
 import { MdOutlineSpaceDashboard } from 'react-icons/md';
 import { GrAdd } from 'react-icons/gr';
 import Avatar from '../avatar/Avatar';
+
+//	hooks
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 export default function Sidebar() {

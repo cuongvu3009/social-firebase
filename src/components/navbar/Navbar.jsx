@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaDiscord } from 'react-icons/fa';
+
+// styles & images
 import './navbar.css';
+
+//	hooks
 import { useLogout } from '../../hooks/useLogout';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
