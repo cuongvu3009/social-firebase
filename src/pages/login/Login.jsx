@@ -1,57 +1,47 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
+import { useLogin } from '../../hooks/useLogin';
 
-const Login = () => {
+// styles
+// import './login.css';
+
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login, error, isPending } = useLogin();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(email, password);
+  };
 
   return (
-    <Wrapper>
-      <Form>
-        <h2>Login</h2>
-        <label htmlFor=''>Email</label>
+    <form onSubmit={handleSubmit} className='auth-form'>
+      <h2>login</h2>
+      <label>
+        <span>email:</span>
         <input
+          required
           type='email'
-          value={email}
           onChange={(e) => setEmail(e.target.value)}
+          value={email}
         />
-        <label htmlFor=''>Password</label>
+      </label>
+      <label>
+        <span>password:</span>
         <input
+          required
           type='password'
-          value={password}
           onChange={(e) => setPassword(e.target.value)}
+          value={password}
         />
-        <Button type='submit'>Login</Button>
-      </Form>
-    </Wrapper>
+      </label>
+      {!isPending && <button className='btn'>Log in</button>}
+      {isPending && (
+        <button className='btn' disabled>
+          loading...
+        </button>
+      )}
+      {error && <div className='error'>{error}</div>}
+    </form>
   );
-};
-
-export default Login;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50vh;
-`;
-
-const Form = styled.form`
-  background-color: #fff;
-  width: 19rem;
-  display: flex;
-  flex-direction: column;
-  padding: 30px;
-  gap: 15px;
-`;
-
-const Button = styled.button`
-  margin-top: 15px;
-  width: max-content;
-  font-size: medium;
-  padding: 5px;
-  color: purple;
-  background-color: transparent;
-  border: 1px solid purple;
-  cursor: pointer;
-`;
+}

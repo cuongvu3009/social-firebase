@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaDiscord } from 'react-icons/fa';
 import './navbar.css';
+import { useLogout } from '../../hooks/useLogout';
 
 const Navbar = () => {
+  const { logout, isPending } = useLogout();
+
   return (
     <nav className='navbar'>
       <ul>
@@ -25,7 +28,16 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <button className='btn'>Logout</button>
+          {!isPending && (
+            <button className='btn' onClick={logout}>
+              Logout
+            </button>
+          )}
+          {isPending && (
+            <button className='btn' disabled>
+              Logging out...
+            </button>
+          )}
         </li>
       </ul>
     </nav>
