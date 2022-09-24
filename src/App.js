@@ -12,6 +12,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import Create from './pages/create/Create';
 import Project from './pages/project/Project';
 import Sidebar from './components/sidebar/Sidebar';
+import OnlineUsers from './components/onlineUsers/OnlineUsers';
 import { useAuthContext } from './hooks/useAuthContext';
 import NotFound from './pages/NotFound';
 
@@ -57,6 +58,7 @@ function App() {
               <Route path='*' element={<NotFound />} />
             </Routes>
           </div>
+          {user && <OnlineUsers />}
         </Router>
       )}
     </div>
