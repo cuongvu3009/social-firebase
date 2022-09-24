@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
+import { timestamp } from '../../firebase/config';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import { useCollection } from '../../hooks/useCollection';
+import { useFirestore } from '../../hooks/useFirestore';
 
 // styles
 import './create.css';
@@ -12,8 +16,16 @@ export default function Create() {
   const [dueDate, setDueDate] = useState('');
   const [category, setCategory] = useState('');
   const [assignedUsers, setAssignedUsers] = useState([]);
-  const { documents } = useCollection('users');
   const [users, setUsers] = useState([]);
+  const [formError, setFormError] = useState('');
+
+  //	hooks
+  const { documents } = useCollection('users');
+  const { user } = useAuthContext();
+  const { addDocument, response } = useFirestore('projects');
+
+  //	navigate
+  const navigate = useNavigate();
 
   //	users options
   useEffect(() => {
@@ -29,7 +41,45 @@ export default function Create() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(name, details, dueDate, category.value, assignedUsers);
+    if (!category) {
+      setFormError('Please select a project category');
+      return;
+    }
+
+    if (assignedUsers.length < 1) {
+      setFormError('Please assign at least 1 user for project');
+      return;
+    }
+
+    const createdBy = {
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      id: user.uid,
+    };
+
+    const assignedUsersList = assignedUsers.map((user) => {
+      return {
+        displayName: user.value.displayName,
+        photoURL: user.value.photoURL,
+        id: user.value.id,
+      };
+    });
+
+    const project = {
+      name,
+      details,
+      assignedUsersList,
+      createdBy,
+      category: category.value,
+      dueDate: timestamp.fromDate(new Date(dueDate)),
+      comments: [],
+    };
+
+    await addDocument(project);
+    console.log('successfully created');
+    if (!response.error) {
+      navigate('/');
+    }
   };
 
   const categories = [
@@ -87,6 +137,7 @@ export default function Create() {
         </label>
 
         <button className='btn'>Add Project</button>
+        {formError && <p className='error'>{formError}</p>}
       </form>
     </div>
   );
